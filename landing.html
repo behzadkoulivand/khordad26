@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="../images/icons8-videocall-64.png" type="">
+
+  <title> دیدار | گپ آنلاین </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" href="../css/bootstrap-rtl.css" />
+  <link rel="stylesheet" href="../css/landing.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link href="../css/font-awesome.min.css" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="../css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="../css/responsive.css" rel="stylesheet" />
+
+  <script async src="../js/Umami.js"></script>
+  <!-- <script async src="../js/Snow.js"></script> -->
+  <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xss/dist/xss.min.js"></script>
+
+</head>
+
+<body class="rtl">
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="../images/hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="/">
+            <img src="../images/icons8-videocall-64.png" alt="">
+            <!-- <span>
+              Finexo
+            </span> -->
+          </a>
+          <!-- <div class="mr-50"> -->
+            <div onclick="ff()" id="loginBtn" class="btn btn-sm btn-primary mr-50" style=></div>
+            
+            <script>
+              var fullname = window.sessionStorage.fullname;
+              if(fullname == undefined || fullname == "logout"){
+                  document.getElementById("loginBtn").innerHTML = "ورود";
+                } else {
+                  document.getElementById("loginBtn").innerHTML = fullname;
+                }
+              function ff() {
+                if(fullname == undefined || fullname == "logout"){
+                  window.location.href = "/login"
+                } else {
+                  window.location.href = "/dashboard"
+                }
+              }
+              
+            </script>
+          
+          
+
+          <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button> -->
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section ">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6 ">
+                  <div class="detail-box">
+                    <h1>
+                      دیدار <br>
+                      گپ تصویری
+                    </h1>
+                    <p class="a">
+                      دیدار، اپلیکیشن کاربردی تماس تصویری و جلسات آنلاین <br>
+                       برای برقراری تماس و یا جلسه آنلاین ابتدا باید وارد شوید
+                    </p>
+                    <!-- <div class="mb-24">
+                      <label class="mb-0 mr-10
+                      " style="color: white;" for="roomName">نام جلسه</label>
+                      <div class="form-group-desktop">
+                          <input
+                              id="roomName"
+                              class="form-input"
+                              type="text"
+                              maxlength="36"
+                              value=""
+                              style="border-radius: 6px"
+                          />
+                          <button
+                              id="genRoomButton"
+                              class="button button-primary br-6 mr-8 mb-8 fas fa-arrows-rotate"
+                              onclick="genRoom()"
+                          ></button>
+                          <button
+                              id="joinRoomButton"
+                              class="button button-primary pulse"
+                              onclick="joinRoom()"
+                          >
+                              گفتگوی جدید
+                          </button>
+                          <script>
+                              document.getElementById('roomName').onkeyup = (e) => {
+                                  if (e.keyCode === 13) {
+                                      e.preventDefault();
+                                      joinRoom();
+                                  }
+                              };
+                              function genRoom() {
+                                  document.getElementById('roomName').value = getUUID4();
+                              }
+                              function getUUID4() {
+                                  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+                                      (
+                                          c ^
+                                          (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+                                      ).toString(16),
+                                  );
+                              }
+                              function joinRoom() {
+                                  const roomName = filterXSS(document.getElementById('roomName').value);
+                                  if (roomName) {
+                                      window.location.href = '/join/' + roomName;
+                                      window.localStorage.lastRoom = roomName;
+                                  } else {
+                                      alert('نام جلسه خالی است\nلطفا یک نام انگلیسی انتخاب کنید');
+                                  }
+                              }
+                          </script>
+                      </div>
+                  </div> -->
+                    <!-- <div class="btn-box">
+                      <a href="" class="btn1">
+                        Read More
+                      </a>
+                    </div> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="images/slider-img.png" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- end slider section -->
+  </div>
+
+
+  <!-- info section -->
+
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 info_col">
+          <div class="info_contact">
+            <h4>
+              آدرس
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  مکان
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  تماس
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  demo@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="info_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info_col">
+          <div class="info_detail">
+            <h4>
+              درباره
+            </h4>
+            <p>
+              دیدار، اپلیکیشن کاربردی تماس تصویری و جلسات آنلاین
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto info_col">
+          <div class="info_link_box">
+            <h4>
+              دسترسی سریع
+            </h4>
+            <div class="info_links">
+              <a class="active" href="#">
+                خانه
+              </a>
+              <a class="" href="#">
+                درباره ما
+              </a>
+              <a class="" href="#">
+                خدمات
+              </a>
+              <a class="" href="#">
+                چرا ما
+              </a>
+              <a class="" href="#">
+                تیم ما
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info_col ">
+          <h4>
+            مشترک شدن
+          </h4>
+          <form action="#">
+            <input type="text" placeholder="Enter email" />
+            <button type="submit">
+              مشترک شدن
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info section -->
+
+  <!-- footer section -->
+  <section class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> سلام
+        <a href='/'></a>
+      </p>
+    </div>
+  </section>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="../js/bootstrap.js"></script>
+  <!-- owl slider -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- custom js -->
+  <script type="text/javascript" src="../js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+  <script defer src="../js/Common.js"></script>
+  <script defer src="../js/landing.js"></script>
+  <script defer src="../js/newRoom.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</body>
+
+</html>

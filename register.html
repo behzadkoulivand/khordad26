@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="../images/icons8-videocall-64.png" type="image/x-icon" />
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/bootstrap-rtl.css" />
+        <link rel="stylesheet" href="../css/font-awesome.css" />
+        <link rel="stylesheet" href="../css/signin.css" />
+
+
+        <script async src="../js/Umami.js"></script>
+        <script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+        <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/xss/dist/xss.min.js"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>دیدار | ثبت نام کاربر</title>
+    </head>
+    <body class="rtl">
+        <div class="form-signin">
+            <h1 class="h3 mb-3 font-weight-normal">ثبت نام کاربر</h1>
+
+            <div class="form-group">
+                <label for="isAdmin">کاربر عادی است یا ناظر یا ادمین؟</label>
+                <select name="isAdmin" class="form-control" id="isAdmin">
+                    <option value= "normal">کاربر عادی</option>
+                    <option value= "supervisor">ناظر</option>
+                    <option value= "admin">ادمین</option>
+                    <option value= "security">امنیت داخلی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="orgCode">کد و جایگاه سازمانی؟</label>
+                <select name="orgCode" class="form-control" id="orgCode">
+                    <option value= "111">111 - نیرو زمینی</option>
+                    <option value= "112">112 - نیرو هوایی</option>
+                    <option value= "113">113 - نیرو دریایی</option>
+                    <option value= "114">114 - ساحفاجا</option>
+                    <option value= "115">115 - عقیدتی سیاسی</option>
+                    <option value= "1141">1141 - معاونت فنی(ساحفاجا)</option>
+                </select>
+            </div>
+            
+            <label for="fullname" class="sr-only">نام و نام خانوادگی</label>
+            <input
+                id="fullname"
+                type="fullname"
+                name="fullname"
+                class="form-control mb-2"
+                placeholder="نام و نام خانوادگی"
+                autofocus
+            />
+            <label for="username" class="sr-only">نام کاربری</label>
+            <input
+                type="username"
+                name="username"
+                id="username"
+                class="form-control mb-2"
+                placeholder="نام کاربری"
+            />
+            <label for="password" class="sr-only">کلمه عبور</label>
+            <input
+                type="password"
+                name="password"
+                id="password"
+                class="form-control mb-2"
+                placeholder="کلمه عبور"
+            />
+            <label for="confirmPassword" class="sr-only">تکرار کلمه عبور</label>
+            <input
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                class="form-control"
+                placeholder="تکرار کلمه عبور"
+            />
+            <!-- <div class="checkbox mb-3">
+                <label>
+                    <a href="/login">اکانت کاربری دارم</a>
+                </label>
+            </div> -->
+            <button id="regButton" class="btn btn-lg btn-primary btn-block" type="submit">
+                ثبت نام
+            </button>
+        </div>
+        <script>
+            
+            const orgCodeInput = document.getElementById('orgCode');
+            const isAdminInput = document.getElementById('isAdmin');
+            const fullnameInput = document.getElementById('fullname');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const regBtn = document.getElementById('regButton');
+
+            orgCodeInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+            isAdminInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+
+            fullnameInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+
+            usernameInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+            passwordInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+            confirmPasswordInput.onkeyup = (e) => {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                    register();
+                }
+            };
+
+            regBtn.onclick = (e) => {
+                register();
+            };
+
+            function register() {
+                const organization_code = filterXSS(document.getElementById('orgCode').value);
+                const isAdmin = filterXSS(document.getElementById('isAdmin').value);
+                const fullname = filterXSS(document.getElementById('fullname').value);
+                const username = filterXSS(document.getElementById('username').value);
+                const password = filterXSS(document.getElementById('password').value);
+                const confirmPassword = filterXSS(document.getElementById('confirmPassword').value);
+                
+
+                if (organization_code && isAdmin && fullname && username && password && confirmPassword) {
+                    if(password != confirmPassword){
+                        alert("کلمه عبور و تکرار کلمه عبور باید یکسان باشند");
+                    return;
+                    }
+                    
+                    axios
+                        .post('/users/register', {
+                            organization_code: organization_code,
+                            user_type: isAdmin,
+                            fullname: fullname,
+                            username: username,
+                            password: password
+                        })
+                        .then(function (response) {
+                            console.log(response);
+
+                            // Store in session
+                            // const token = response.data.message.token;
+                            // const message = response.data.message;
+                            // const fullname = response.data.message.fullname;
+                            // window.sessionStorage.peer_token = token;
+                            // window.sessionStorage.username = username;
+                            // window.sessionStorage.message = message;
+
+                            // if (room) {
+                            //     return (window.location.href =
+                            //         '/join/' + window.location.search);
+                            //     /*
+                            //     return (window.location.href =
+                            //         '/join/?room=' + room + '&token=' + token); */
+                            // }
+                            // if (roomPath) {
+                            //     return (window.location.href = '/join/' + roomPath);
+                            //     /*
+                            //     return (window.location.href =
+                            //         '/join/?room=' + roomPath + '&token=' + token); */
+                            // }
+
+                            alert(response.data.message);
+                            return (window.location.href = '/dashboard');
+
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                            alert("مشکلی پیش آمده");
+                        });
+                    return;
+                }
+                if (!fullname && !username && !password && !confirmPassword ) {
+                    alert("موارد زیر نباید خالی باشد.");
+                    return;
+                }
+                if (!fullname) {
+                    alert("نام خانوادگی الزامی است");
+                    return;
+                }
+                if (!username) {
+                    alert("نام کاربری الزامی است");
+                    return;
+                }
+                if (!password) {
+                    alert("کلمه عبور الزامی است");
+                    return;
+                }
+                if (!confirmPassword) {
+                    alert("تکرار کلمه عبور الزامی است");
+                    return;
+                }
+            }
+        </script>
+        <script src="/js/jquery.slim.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script defer src="../js/Common.js"></script>
+        <script defer src="../js/landing.js"></script>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </body>
+</html>
